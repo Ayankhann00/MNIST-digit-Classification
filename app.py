@@ -2,7 +2,6 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-import cv2 as cv
 from streamlit_drawable_canvas import st_canvas
 
 # Set page title and favicon
