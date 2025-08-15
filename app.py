@@ -14,7 +14,7 @@ st.markdown("Draw a digit (0-9) on the canvas below, and the model will predict 
 # Load the trained model
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("mnist_cnn_model.h5")
+    return tf.keras.models.load_model("mnist_cnn_model.keras")
 
 model = load_model()
 
