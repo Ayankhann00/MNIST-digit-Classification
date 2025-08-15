@@ -5,14 +5,11 @@ from PIL import Image
 from streamlit_drawable_canvas import st_canvas
 import os
 
-# Set page title and favicon
 st.set_page_config(page_title="MNIST Digit Predictor", page_icon="✏️")
 
-# Title and description
 st.title("MNIST Digit Predictor")
 st.markdown("Draw a digit (0-9) on the canvas below, and the model will predict the number.")
 
-# Function to train and save a model if file doesn't exist
 def train_and_save_model():
     st.info("Training new MNIST model... please wait ⏳")
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
@@ -37,7 +34,6 @@ def train_and_save_model():
     st.success("Model trained and saved ✅")
     return model
 
-# Load the trained model, or train if missing
 @st.cache_resource
 def load_model():
     if not os.path.exists("mnist_cnn_model.keras"):
@@ -46,7 +42,6 @@ def load_model():
 
 model = load_model()
 
-# Create a canvas for drawing
 st.subheader("Draw a digit here:")
 canvas_result = st_canvas(
     fill_color="black",  
@@ -59,7 +54,6 @@ canvas_result = st_canvas(
     key="canvas",
 )
 
-# Preprocess function
 def preprocess_image(image):
     img = Image.fromarray(image).convert("L")
     img = img.resize((28, 28), Image.LANCZOS)
@@ -68,7 +62,6 @@ def preprocess_image(image):
     img_array = img_array.reshape(1, 28, 28, 1)
     return img_array
 
-# Predict button
 if st.button("Predict"):
     if canvas_result.image_data is not None:
         processed_image = preprocess_image(canvas_result.image_data)
@@ -87,8 +80,7 @@ if st.button("Predict"):
         st.bar_chart(prob_dict)
     else:
         st.error("Please draw a digit on the canvas before predicting.")
-
-# Instructions
+        
 st.markdown("""
 ### Instructions:
 1. Draw a digit (0-9) on the canvas using your mouse or touch.
