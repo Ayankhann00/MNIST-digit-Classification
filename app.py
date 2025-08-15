@@ -33,16 +33,16 @@ def train_and_save_model():
 
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
     model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=2, verbose=1)
-    model.save("mnist_cnn_model.h5")
+    model.save("mnist_cnn_model.keras")
     st.success("Model trained and saved ✅")
     return model
 
 # Load the trained model, or train if missing
 @st.cache_resource
 def load_model():
-    if not os.path.exists("mnist_cnn_model.h5"):
+    if not os.path.exists("mnist_cnn_model.keras"):
         return train_and_save_model()
-    return tf.keras.models.load_model("mnist_cnn_model.h5")
+    return tf.keras.models.load_model("mnist_cnn_model.keras")
 
 model = load_model()
 
